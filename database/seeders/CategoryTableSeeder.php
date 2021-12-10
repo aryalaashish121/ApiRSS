@@ -15,10 +15,10 @@ class CategoryTableSeeder extends Seeder
     public function run()
     {
         $categories = [
-            ['name'=>"Sports"],
-            ['name'=>"Movies"],
-            ['name'=>"Politics"],
-            ['name'=>"Health"],
+            ['name'=>"sports"],
+            ['name'=>"movies"],
+            ['name'=>"politics"],
+            ['name'=>"health"],
         ];
 
         foreach($categories as $category){
