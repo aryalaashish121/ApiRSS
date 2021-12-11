@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleStoreRequest;
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use App\Models\Category;
 use Carbon\Carbon;
@@ -88,7 +89,7 @@ class ArticleController extends Controller
         $feed->setTextLimit(100);
     }
 
-    public function getArticle(Request $request){
-        return $request->all();
+    public function getArticle($category,$article){
+        return new ArticleResource(Article::where('slug',$article)->first());
     }
 }
