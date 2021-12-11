@@ -29,6 +29,4 @@ Route::middleware(['checkUrlLowerCase'])->group(function(){
     Route::post('/create-article',[ArticleController::class,'store']);
     Route::get('/{category}',[ArticleController::class,'render']);
     Route::get('/{category}/{article}',[ArticleController::class,'getArticle']);
-
-   
 });
