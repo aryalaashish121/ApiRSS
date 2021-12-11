@@ -20,7 +20,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/create-article',[ArticleController::class,'store']);
-// Route::get('render',[ArticleController::class,'render']);
-Route::get('/{category}',[ArticleController::class,'render'])->middleware('checkUrlLowerCase');
-Route::get('/{category}/{article}',[ArticleController::class,'getArticle']);
+Route::middleware(['checkUrlLowerCase'])->group(function(){
+    //create category
+    Route::post('/category/create',[CategoryController::class,'store']);
+    Route::get('/allcategories',[CategoryController::class,'index']);
+
+
+    Route::post('/create-article',[ArticleController::class,'store']);
+    Route::get('/{category}',[ArticleController::class,'render']);
+    Route::get('/{category}/{article}',[ArticleController::class,'getArticle']);
+
+   
+});

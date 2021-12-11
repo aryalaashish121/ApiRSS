@@ -20,7 +20,14 @@ class ArticleResource extends JsonResource
             'description'=>$this->description,
             'created_at'=>$this->created_at->diffForHumans(),
             'updated_at'=>$this->updated_at->diffForHumans(),
-            'live'=>$this->is_live
+            'live'=>$this->isLive(),
         ];
+    }
+
+    public function isLive(){
+        if($this->is_live===0){
+            return False;
+        }
+        return True;
     }
 }

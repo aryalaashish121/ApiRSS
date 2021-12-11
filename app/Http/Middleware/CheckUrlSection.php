@@ -21,7 +21,7 @@ class CheckUrlSection
         if($path!==$pathLowercase){
             return response()->json([
                 "error"=>"Url Can only be in lower case!"
-            ]);
+            ],406);
         }
         return $next($request);
     }

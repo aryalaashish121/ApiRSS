@@ -22,9 +22,7 @@ class ArticleController extends Controller
 
     public function render(Request $request,$category_slug)
     {
-        $page = $request->page;
-        $per_page = $request->per_page;
-        $is_live = $request->is_live;
+        
         /* create new feed */
         \Log::info("Fetch article");
         $category =  Category::where('slug', $category_slug)->pluck('id')->first();
