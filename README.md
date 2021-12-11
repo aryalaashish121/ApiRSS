@@ -37,5 +37,6 @@ This end point will list all the articles under category
 2. localhost:8000/api/<category_name>?per_page =<number_of_article_you_want>
 
 #### accepted json format data in get request
- per_page, is_live=['true','false']
-- 
+- per_page, is_live=['true','false']
+
+#### Request api end point will fetch data from cache for 10 minutes if request category matched.

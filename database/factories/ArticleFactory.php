@@ -17,7 +17,8 @@ class ArticleFactory extends Factory
             'title'=>$this->faker->sentence,
             'author'=>$this->faker->name,
             'description'=>$this->faker->text,
-            'category_id'=>rand(1,4)
+            'category_id'=>rand(1,4),
+            'is_live'=>rand(1,0),
         ];
     }
 }
