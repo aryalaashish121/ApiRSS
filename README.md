@@ -8,21 +8,21 @@ Laravel is accessible, powerful, and provides tools required for large, robust a
 
 you will need composer to run this project
 
--Install dependencies using composer
-        --composer install
+#### Install dependencies using composer
+- composer install
 
--Install node modules and compile all the assets
-       -- npm install & npm run dev
+#### Install node modules and compile all the assets
+- npm install & npm run dev
 
--copy .env.example as .env
-        -- cp .env.example .env
+### copy .env.example as .env
+- cp .env.example .env
 
--Create a database and change in .env file under database section
-        --DB_DATABASE: <created_database_name>
+### Create a database and change in .env file under database section
+- DB_DATABASE: <created_database_name>
         
--Run the migration with seeders where default four categories are seeded ['health','sports','movies','politics']
---php aritsan migrate
---php artisan db:seed
+#### Run the migration with seeders where default four categories are seeded ['health','sports','movies','politics']
+- php aritsan migrate
+- php artisan db:seed
 
 
 ## Using Project
@@ -36,6 +36,6 @@ This end point will list all the articles under category
 
 2. localhost:8000/api/<category_name>?per_page =<number_of_article_you_want>
 
-Note: accepted json format data in get request
+#### accepted json format data in get request
  per_page, is_live=['true','false']
 - 
