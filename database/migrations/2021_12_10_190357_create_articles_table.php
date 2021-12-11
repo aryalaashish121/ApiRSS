@@ -18,6 +18,7 @@ class CreateArticlesTable extends Migration
             $table->string('title');
             $table->string('description')->nullable();
             $table->string('slug');
+            $table->string('author')->nullable();
             $table->boolean('is_live')->default(false);
             $table->unsignedBigInteger('category_id')->nullable();
             $table->timestamps();

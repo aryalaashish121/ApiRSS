@@ -11,7 +11,7 @@ class Article extends Model
     use HasFactory,sluggable;
 
     protected $fillable = [
-        'title','description','is_live','category_id','slug','is_live'
+        'title','author','description','is_live','category_id','slug','is_live'
     ];
 
     public function sluggable(): array

@@ -21,5 +21,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/create-article',[ArticleController::class,'store']);
-
-Route::get('/{category}',[CategoryController::class,'index']);
+// Route::get('render',[ArticleController::class,'render']);
+Route::get('/{category}',[ArticleController::class,'render'])->middleware('checkUrlLowerCase');
+Route::get('/{category}/{article}',[ArticleController::class,'getArticle']);
