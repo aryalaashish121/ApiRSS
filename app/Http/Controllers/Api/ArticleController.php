@@ -25,6 +25,9 @@ class ArticleController extends Controller
 
     public function render(Request $request,$category_slug)
     {
+        $page = $request->page;
+        $per_page = $request->per_page;
+        $is_live = $request->is_live;
         /* create new feed */
         \Log::info("Fetch article");
         $category =  Category::where('slug', $category_slug)->pluck('id')->first();
@@ -34,9 +37,22 @@ class ArticleController extends Controller
             ]);
         }
         $posts = Cache::remember($category_slug, 600, function () use ($category,$request) {
-            return Article::where('category_id', $category)
-            ->orderBy('created_at','desc')
-            ->get();
+             $articles = Article::where('category_id', $category)
+            ->orderBy('created_at','desc');
+
+            if (!empty($request->is_live)) {
+                $status = 0;
+                if ($request->is_live == 'true') {
+                    $status = 1;
+                } else {
+                    $status = 0;
+                }
+                $articles->where(['is_live' => $status]);
+            }
+            if($request->per_page){
+              return  $articles->paginate($request->per_page);
+            }
+            return $articles->get();
         });
 
         if(!$posts){
