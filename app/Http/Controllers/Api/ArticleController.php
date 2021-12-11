@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\ArticleStoreRequest;
+use App\Http\Resources\ArticleResource;
 use App\Models\Article;
 use App\Models\Category;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\URL;
+
+use function PHPUnit\Framework\isEmpty;
+use function PHPUnit\Framework\isNull;
 
 class ArticleController extends Controller
 {
@@ -19,18 +23,34 @@ class ArticleController extends Controller
         return response()->json($article, 200);
     }
 
-    public function render($category_slug)
+    public function render(Request $request,$category_slug)
     {
-
         /* create new feed */
-        $feed = \App::make("feed");
-
-        $category =  Category::where('slug', $category_slug)->pluck('id');
-        $posts = Cache::remember($category, 600, function () use ($category) {
-            return Article::where('category_id', $category)->get();
+        \Log::info("Fetch article");
+        $category =  Category::where('slug', $category_slug)->pluck('id')->first();
+        if(!$category){
+            return response()->json([
+                "error"=>"Provided category doesnot exist."
+            ]);
+        }
+        $posts = Cache::remember($category_slug, 600, function () use ($category,$request) {
+            return Article::where('category_id', $category)
+            ->orderBy('created_at','desc')
+            ->get();
         });
 
-        $this->setTitle($feed, $posts[0]->created_at);
+        if(!$posts){
+            return response()->json([
+                "error"=>"No post avaiable."
+            ]);
+        }
+        $feed = $this->createFeed($posts,$category_slug);
+        return $feed->render('atom');
+    }
+
+    private function createFeed($posts,$category_slug){
+        $feed = \App::make("feed");
+        $this->setTitle($feed,Carbon::now());
         foreach ($posts as $post) {
             $feed->addItem([
                 'title' => $post->title,
@@ -41,8 +61,7 @@ class ArticleController extends Controller
                 'content' => 'content'
             ]);
         }
-        // }
-        return $feed->render('atom');
+        return $feed;
     }
 
     private function setTitle($feed, $date)
@@ -57,7 +76,7 @@ class ArticleController extends Controller
         $feed->setTextLimit(100);
     }
 
-    public function getArticle(){
-        
+    public function getArticle(Request $request){
+        return $request->all();
     }
 }
