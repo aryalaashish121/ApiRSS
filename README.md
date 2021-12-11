@@ -2,7 +2,6 @@
 ## About Project
 
  This project delivers server-side application in PHP exposing RSS feeds
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
 
 ## Installation
 
